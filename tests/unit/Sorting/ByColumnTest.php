@@ -1,16 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test\Sorting;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Sorting\ByColumn;
-use Mockery as m;
+use Mockery;
 
+/**
+ * Class ByColumnTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test\Sorting
+ */
 class ByColumnTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfiguresSortingInQueryBuilder()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->with('t.name', 'DESC')->once();
 
         self::sortingByNameWithParameters(
@@ -23,9 +29,8 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testSortingCanBeDefinedWithoutTheDirection()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->with('t.name', null)->once();
-
 
         self::sortingByNameWithParameters(
             [
@@ -36,7 +41,7 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesNoSortingWhenNoParametersWereGiven()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->never();
 
         self::sortingByNameWithParameters([])->apply($builder);
@@ -44,7 +49,7 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testWillIgnoreUnknownParameters()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->never();
 
         self::sortingByNameWithParameters(
@@ -56,7 +61,7 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testPermanentDefaultSortingCanBeGiven()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->with('t.name', 'DESC')->once();
 
         self::sortingByNameWithParameters([], 'DESC')->apply($builder);
@@ -64,7 +69,7 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testPermanentDefaultSortingIsActiveEvenWhenSortingForOtherColumnIsRequested()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->with('t.name', 'DESC')->once();
 
         self::sortingByNameWithParameters(
@@ -78,7 +83,7 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testPermanentDefaultSortingCanBeOverridden()
     {
-        $builder = m::mock(QueryBuilder::class);
+        $builder = Mockery::mock(QueryBuilder::class);
         $builder->shouldReceive('addOrderBy')->with('t.name', 'ASC')->once();
 
         self::sortingByNameWithParameters(
@@ -107,6 +112,12 @@ class ByColumnTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param      $parameters
+     * @param null $defaultDirection
+     *
+     * @return ByColumn
+     */
     private static function sortingByNameWithParameters($parameters, $defaultDirection = null)
     {
         $sorting = new ByColumn('name', 't.name', $defaultDirection);

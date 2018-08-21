@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test;
 
 use Mockery;
 use Ifedko\DoctrineDbalPagination\ListPagination;
 
+/**
+ * Class ListPaginationTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test
+ */
 class ListPaginationTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetWithCorrectLimitAndOffset()
@@ -18,6 +24,7 @@ class ListPaginationTest extends \PHPUnit_Framework_TestCase
         ];
         $listBuilder = self::createListBuilderMock($expectedTotal, $expectedItems);
 
+        /** @noinspection PhpParamsInspection */
         $listPagination = new ListPagination($listBuilder);
         $listPage = $listPagination->get($limit, $offset);
 
@@ -25,10 +32,8 @@ class ListPaginationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedItems, $listPage['items']);
     }
 
-    public function testGetWithNotCorrectLimitAndOffset()
+    public function testGetWithEmptyLimitAndOffset()
     {
-        $limit = 'any limit';
-        $offset = 'any offset';
         $expectedTotal = 15;
         $expectedItems = [
             ['id' => 1, 'name' => 'name1'],
@@ -36,8 +41,9 @@ class ListPaginationTest extends \PHPUnit_Framework_TestCase
         ];
         $listBuilder = self::createListBuilderMock($expectedTotal, $expectedItems);
 
+        /** @noinspection PhpParamsInspection */
         $listPagination = new ListPagination($listBuilder);
-        $listPage = $listPagination->get($limit, $offset);
+        $listPage = $listPagination->get();
 
         $this->assertEquals($expectedTotal, $listPage['total']);
         $this->assertEquals($expectedItems, $listPage['items']);
@@ -52,6 +58,7 @@ class ListPaginationTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
+        /** @noinspection PhpParamsInspection */
         $pager = new ListPagination($listBuilder);
         $pager->definePageItemsMapCallback(function ($row) {
             return array_merge($row, ['object' => json_decode($row['object'], true)]);
@@ -65,6 +72,12 @@ class ListPaginationTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param $expectedTotal
+     * @param $expectedItems
+     *
+     * @return Mockery\MockInterface
+     */
     private static function createListBuilderMock($expectedTotal, $expectedItems)
     {
         $statementMock = Mockery::mock('\Doctrine\DBAL\Statement', [

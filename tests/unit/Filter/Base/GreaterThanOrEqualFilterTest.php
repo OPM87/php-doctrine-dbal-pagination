@@ -1,12 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test\Filter\Base;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Mockery as m;
 use Ifedko\DoctrineDbalPagination\Filter\Base\GreaterThanOrEqualFilter;
 
+/**
+ * Class GreaterThanOrEqualFilterTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test\Filter\Base
+ */
 class GreaterThanOrEqualFilterTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreatesGreaterThanOrEqualCondition()
@@ -22,6 +27,5 @@ class GreaterThanOrEqualFilterTest extends \PHPUnit_Framework_TestCase
                 ->bindValues('2015-09-01')
                 ->apply($queryBuilder)->getSQL()
         );
-
     }
 }

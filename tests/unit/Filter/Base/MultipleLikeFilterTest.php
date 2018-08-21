@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test\Filter\Base;
 
@@ -6,6 +7,11 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\Base\MultipleLikeFilter;
 
+/**
+ * Class MultipleLikeFilterTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test\Filter\Base
+ */
 class MultipleLikeFilterTest extends \PHPUnit_Framework_TestCase
 {
     public function testApplyWithSingleColumnReturnQueryBuilderSuccess()

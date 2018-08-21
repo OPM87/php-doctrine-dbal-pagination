@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Sorting\ByColumn;
 use Ifedko\DoctrineDbalPagination\SortingInterface;
 use Mockery;
@@ -13,6 +15,11 @@ use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 use Ifedko\DoctrineDbalPagination\ListBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\Base\EqualFilter;
 
+/**
+ * Class TestListBuilder
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test
+ */
 class TestListBuilder extends ListBuilder
 {
     public $testSortingModel;
@@ -20,7 +27,7 @@ class TestListBuilder extends ListBuilder
     /**
      * {@inheritDoc}
      */
-    protected function configureSorting($parameters)
+    protected function configureSorting($parameters): ListBuilder
     {
         if ($this->testSortingModel) {
             $this->sortUsing($this->testSortingModel, $parameters);
@@ -36,7 +43,7 @@ class TestListBuilder extends ListBuilder
     /**
      * {@inheritDoc}
      */
-    protected function configureFilters($parameters)
+    protected function configureFilters(array $parameters): ListBuilder
     {
         $mapAvailableFilterByParameter = [
             'user_id' => new EqualFilter('id', \PDO::PARAM_INT),
@@ -59,7 +66,7 @@ class TestListBuilder extends ListBuilder
     /**
      * {@inheritDoc}
      */
-    protected function baseQuery()
+    protected function baseQuery(): QueryBuilder
     {
         $builder = $this->getQueryBuilder();
         $builder
@@ -70,6 +77,11 @@ class TestListBuilder extends ListBuilder
     }
 }
 
+/**
+ * Class ListPaginationFactoryTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test
+ */
 class ListPaginationFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateByLogIOSListBuilderTypeSuccess()
@@ -155,6 +167,9 @@ class ListPaginationFactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return Mockery\MockInterface
+     */
     private static function createDbConnectionMock()
     {
         return Mockery::mock('\Doctrine\DBAL\Connection');

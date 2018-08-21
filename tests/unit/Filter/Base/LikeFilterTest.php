@@ -1,12 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test\Filter\Base;
 
-use Mockery;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\Base\LikeFilter;
 
+/**
+ * Class LikeFilterTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test\Filter\Base
+ */
 class LikeFilterTest extends \PHPUnit_Framework_TestCase
 {
     public function testApplyWithSingleColumnsReturnQueryBuilderSuccess()

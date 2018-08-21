@@ -1,9 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test;
 
 use Mockery;
 
+/**
+ * Class ListBuilderTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test
+ */
 class ListBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfigureSuccess()

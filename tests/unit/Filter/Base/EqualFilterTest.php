@@ -1,12 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Test\Filter\Base;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Mockery;
 use Ifedko\DoctrineDbalPagination\Filter\Base\EqualFilter;
 
+/**
+ * Class EqualFilterTest
+ *
+ * @package Ifedko\DoctrineDbalPagination\Test\Filter\Base
+ */
 class EqualFilterTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreatesEquationConditionWithInteger()
@@ -22,7 +27,6 @@ class EqualFilterTest extends \PHPUnit_Framework_TestCase
                 ->bindValues(12)
                 ->apply($queryBuilder)->getSQL()
         );
-
     }
 
     public function testCreatesEquationConditionWithString()
@@ -38,7 +42,6 @@ class EqualFilterTest extends \PHPUnit_Framework_TestCase
                 ->bindValues('xiag')
                 ->apply($queryBuilder)->getSQL()
         );
-
     }
 
     public function testConvertsInputValueToIntegerIfNeeded()
@@ -54,6 +57,5 @@ class EqualFilterTest extends \PHPUnit_Framework_TestCase
                 ->bindValues('12not-an-integer')
                 ->apply($queryBuilder)->getSQL()
         );
-
     }
 }
