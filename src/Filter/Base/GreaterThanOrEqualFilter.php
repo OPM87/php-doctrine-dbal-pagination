@@ -2,10 +2,14 @@
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
-
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class GreaterThanOrEqualFilter
+ *
+ * @package Ifedko\DoctrineDbalPagination\Filter\Base
+ */
 class GreaterThanOrEqualFilter implements FilterInterface
 {
     /**
@@ -32,11 +36,13 @@ class GreaterThanOrEqualFilter implements FilterInterface
     public function bindValues($values)
     {
         $this->value = $values;
+
         return $this;
     }
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $builder
+     *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
     public function apply(QueryBuilder $builder)

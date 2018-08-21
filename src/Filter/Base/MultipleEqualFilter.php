@@ -6,6 +6,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class MultipleEqualFilter
+ *
+ * @package Ifedko\DoctrineDbalPagination\Filter\Base
+ */
 class MultipleEqualFilter implements FilterInterface
 {
     /**
@@ -46,6 +51,7 @@ class MultipleEqualFilter implements FilterInterface
         $builder
             ->andWhere($this->column . ' IN (:values)')
             ->setParameter('values', $this->values, Connection::PARAM_STR_ARRAY);
+
         return $builder;
     }
 }

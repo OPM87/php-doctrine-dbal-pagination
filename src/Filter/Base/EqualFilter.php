@@ -5,6 +5,11 @@ namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class EqualFilter
+ *
+ * @package Ifedko\DoctrineDbalPagination\Filter\Base
+ */
 class EqualFilter implements FilterInterface
 {
     /**
@@ -38,6 +43,7 @@ class EqualFilter implements FilterInterface
     public function bindValues($values)
     {
         $this->value = ($this->type === \PDO::PARAM_INT) ? intval($values) : $values;
+
         return $this;
     }
 

@@ -5,6 +5,11 @@ namespace Ifedko\DoctrineDbalPagination\Sorting;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\SortingInterface;
 
+/**
+ * Class ByColumn
+ *
+ * @package Ifedko\DoctrineDbalPagination\Sorting
+ */
 class ByColumn implements SortingInterface
 {
     const SORT_ASC = 'ASC';
@@ -31,6 +36,7 @@ class ByColumn implements SortingInterface
 
     /**
      * @param array $values
+     *
      * @return array values that were actually used to define sorting
      */
     public function bindValues($values)
@@ -42,10 +48,9 @@ class ByColumn implements SortingInterface
 
             $this->sortColumn = $this->columnName;
             $this->sortDirection = isset($values[self::PARAM_NAME_SORT_ORDER]) &&
-                in_array(strtoupper($values[self::PARAM_NAME_SORT_ORDER]), [self::SORT_ASC, self::SORT_DESC], true) ?
-                    strtoupper($values['sortOrder']) : $this->defaultDirection;
-
-        } elseif($this->defaultDirection !== null) {
+            in_array(strtoupper($values[self::PARAM_NAME_SORT_ORDER]), [self::SORT_ASC, self::SORT_DESC], true) ?
+                strtoupper($values['sortOrder']) : $this->defaultDirection;
+        } elseif ($this->defaultDirection !== null) {
             $this->sortColumn = $this->columnName;
             $this->sortDirection = $this->defaultDirection;
         }
@@ -63,6 +68,7 @@ class ByColumn implements SortingInterface
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $builder
+     *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
     public function apply(QueryBuilder $builder)
@@ -70,6 +76,7 @@ class ByColumn implements SortingInterface
         if ($this->sortColumn) {
             $builder->addOrderBy($this->sortColumn, $this->sortDirection);
         }
+
         return $builder;
     }
 }

@@ -5,6 +5,11 @@ namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class LikeFilter
+ *
+ * @package Ifedko\DoctrineDbalPagination\Filter\Base
+ */
 class LikeFilter implements FilterInterface
 {
     /**
@@ -24,9 +29,9 @@ class LikeFilter implements FilterInterface
 
     /**
      * @param string|array $columns
-     * @param array $options
+     * @param array        $options
      */
-    public function __construct($columns, $options=[])
+    public function __construct($columns, $options = [])
     {
         $this->columns = (!is_array($columns)) ? [$columns] : $columns;
         $this->options = array_merge(['operator' => 'LIKE'], $options);
@@ -38,6 +43,7 @@ class LikeFilter implements FilterInterface
     public function bindValues($values)
     {
         $this->value = $values;
+
         return $this;
     }
 

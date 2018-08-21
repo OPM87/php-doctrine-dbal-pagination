@@ -2,10 +2,14 @@
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class DateRangeFilter
+ *
+ * @package Ifedko\DoctrineDbalPagination\Filter\Base
+ */
 class DateRangeFilter implements FilterInterface
 {
     /**
@@ -64,6 +68,7 @@ class DateRangeFilter implements FilterInterface
         }
 
         $builder->andWhere($andCondition);
+
         return $builder;
     }
 }

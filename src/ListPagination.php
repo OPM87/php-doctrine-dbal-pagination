@@ -2,10 +2,11 @@
 
 namespace Ifedko\DoctrineDbalPagination;
 
-use Doctrine\DBAL\Connection;
-use Ifedko\DoctrineDbalPagination\DbAdapter;
-use Ifedko\DoctrineDbalPagination\ListBuilder;
-
+/**
+ * Class ListPagination
+ *
+ * @package Ifedko\DoctrineDbalPagination
+ */
 class ListPagination
 {
     const DEFAULT_LIMIT = 20;
@@ -32,6 +33,7 @@ class ListPagination
     /**
      * @param int $limit
      * @param int $offset
+     *
      * @return array
      */
     public function get($limit, $offset)
@@ -53,6 +55,9 @@ class ListPagination
         ];
     }
 
+    /**
+     * @param callback $callback
+     */
     public function definePageItemsMapCallback($callback)
     {
         $this->pageItemsMapCallback = $callback;

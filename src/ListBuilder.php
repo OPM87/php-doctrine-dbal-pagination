@@ -6,6 +6,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
 
+/**
+ * Class ListBuilder
+ *
+ * @package Ifedko\DoctrineDbalPagination
+ */
 abstract class ListBuilder
 {
     /**
@@ -58,6 +63,7 @@ abstract class ListBuilder
         $queryBuilder = $this->baseQuery();
         $queryBuilder = $this->applyFilters($queryBuilder);
         $queryBuilder = $this->applySortings($queryBuilder);
+
         return $queryBuilder;
     }
 
@@ -68,6 +74,7 @@ abstract class ListBuilder
     {
         $queryBuilder = $this->baseQuery();
         $queryBuilder = $this->applyFilters($queryBuilder);
+
         return $queryBuilder;
     }
 
@@ -86,6 +93,7 @@ abstract class ListBuilder
 
     /**
      * @param array $parameters
+     *
      * @return $this
      */
     protected function configureFilters($parameters)
@@ -95,6 +103,7 @@ abstract class ListBuilder
 
     /**
      * @param array $parameters
+     *
      * @return $this
      */
     protected function configureSorting($parameters)
@@ -111,7 +120,7 @@ abstract class ListBuilder
     }
 
     /**
-     * @param $sorting SortingInterface
+     * @param       $sorting SortingInterface
      * @param array $parameters
      */
     protected function sortUsing(SortingInterface $sorting, array $parameters)
@@ -125,6 +134,7 @@ abstract class ListBuilder
 
     /**
      * @param QueryBuilder $queryBuilder
+     *
      * @return QueryBuilder
      */
     private function applyFilters(QueryBuilder $queryBuilder)
@@ -139,6 +149,7 @@ abstract class ListBuilder
 
     /**
      * @param QueryBuilder $queryBuilder
+     *
      * @return QueryBuilder
      */
     private function applySortings(QueryBuilder $queryBuilder)
