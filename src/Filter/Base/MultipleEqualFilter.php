@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
@@ -34,19 +35,21 @@ class MultipleEqualFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function bindValues($values)
+    public function bindValues($values): FilterInterface
     {
         if (!is_array($values)) {
             $values = [$values];
         }
 
         $this->values = $values;
+        
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function apply(QueryBuilder $builder)
+    public function apply(QueryBuilder $builder): QueryBuilder
     {
         $builder
             ->andWhere($this->column . ' IN (:values)')

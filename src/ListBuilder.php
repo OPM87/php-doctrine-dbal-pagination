@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination;
 
@@ -13,24 +14,16 @@ use Ifedko\DoctrineDbalPagination\Filter\FilterInterface;
  */
 abstract class ListBuilder
 {
-    /**
-     * @var Connection
-     */
+    /** @var Connection */
     protected $dbConnection;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $filters;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $sortings;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $sortingParameters = [];
 
     /**
@@ -45,8 +38,10 @@ abstract class ListBuilder
 
     /**
      * @param array $parameters
+     *                         
+     * @return void
      */
-    public function configure($parameters)
+    public function configure(array $parameters): void
     {
         $this->filters = [];
         $this->configureFilters($parameters);
@@ -58,7 +53,7 @@ abstract class ListBuilder
     /**
      * @return QueryBuilder
      */
-    public function query()
+    public function query(): QueryBuilder
     {
         $queryBuilder = $this->baseQuery();
         $queryBuilder = $this->applyFilters($queryBuilder);
@@ -70,7 +65,7 @@ abstract class ListBuilder
     /**
      * @return QueryBuilder
      */
-    public function totalQuery()
+    public function totalQuery(): QueryBuilder
     {
         $queryBuilder = $this->baseQuery();
         $queryBuilder = $this->applyFilters($queryBuilder);
@@ -81,7 +76,7 @@ abstract class ListBuilder
     /**
      * @return array of sorting parameter that were applied to the list
      */
-    public function sortingParameters()
+    public function sortingParameters(): array
     {
         return $this->sortingParameters;
     }
@@ -89,14 +84,14 @@ abstract class ListBuilder
     /**
      * @return QueryBuilder
      */
-    abstract protected function baseQuery();
+    abstract protected function baseQuery(): QueryBuilder;
 
     /**
      * @param array $parameters
      *
-     * @return $this
+     * @return ListBuilder
      */
-    protected function configureFilters($parameters)
+    protected function configureFilters(array $parameters): ListBuilder
     {
         return $this;
     }
@@ -104,9 +99,9 @@ abstract class ListBuilder
     /**
      * @param array $parameters
      *
-     * @return $this
+     * @return ListBuilder
      */
-    protected function configureSorting($parameters)
+    protected function configureSorting(array $parameters): ListBuilder
     {
         return $this;
     }
@@ -114,7 +109,7 @@ abstract class ListBuilder
     /**
      * @return QueryBuilder
      */
-    protected function getQueryBuilder()
+    protected function getQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this->dbConnection);
     }
@@ -122,8 +117,10 @@ abstract class ListBuilder
     /**
      * @param       $sorting SortingInterface
      * @param array $parameters
+     *                         
+     * @return void
      */
-    protected function sortUsing(SortingInterface $sorting, array $parameters)
+    protected function sortUsing(SortingInterface $sorting, array $parameters): void
     {
         $this->sortingParameters = array_merge(
             $sorting->bindValues($parameters),
@@ -137,7 +134,7 @@ abstract class ListBuilder
      *
      * @return QueryBuilder
      */
-    private function applyFilters(QueryBuilder $queryBuilder)
+    private function applyFilters(QueryBuilder $queryBuilder): QueryBuilder
     {
         /* @var $filter FilterInterface */
         foreach ($this->filters as $filter) {
@@ -152,7 +149,7 @@ abstract class ListBuilder
      *
      * @return QueryBuilder
      */
-    private function applySortings(QueryBuilder $queryBuilder)
+    private function applySortings(QueryBuilder $queryBuilder): QueryBuilder
     {
         foreach ($this->sortings as $sorting) {
             $sorting->apply($queryBuilder);

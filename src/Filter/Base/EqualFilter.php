@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
@@ -40,7 +41,7 @@ class EqualFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function bindValues($values)
+    public function bindValues($values): FilterInterface
     {
         $this->value = ($this->type === \PDO::PARAM_INT) ? intval($values) : $values;
 
@@ -50,7 +51,7 @@ class EqualFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function apply(QueryBuilder $builder)
+    public function apply(QueryBuilder $builder): QueryBuilder
     {
         $builder->andWhere($builder->expr()->eq($this->column, $builder->expr()->literal($this->value, $this->type)));
 

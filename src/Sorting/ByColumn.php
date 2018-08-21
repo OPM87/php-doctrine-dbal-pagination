@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Sorting;
 
@@ -17,9 +18,13 @@ class ByColumn implements SortingInterface
     const PARAM_NAME_SORT_BY = 'sortBy';
     const PARAM_NAME_SORT_ORDER = 'sortOrder';
 
+    /** @var string|null */
     private $sortColumn;
+    /** @var string|null */
     private $sortDirection;
+    /** @var string */
     private $columnAlias;
+    /** @var string */
     private $columnName;
 
     /**
@@ -27,7 +32,14 @@ class ByColumn implements SortingInterface
      */
     private $defaultDirection;
 
-    public function __construct($columnAlias, $columnName, $defaultDirection = null)
+    /**
+     * ByColumn constructor.
+     *
+     * @param string      $columnAlias
+     * @param string      $columnName
+     * @param null|string $defaultDirection
+     */
+    public function __construct(string $columnAlias, string $columnName, ?string $defaultDirection = null)
     {
         $this->columnAlias = $columnAlias;
         $this->columnName = $columnName;
@@ -39,7 +51,7 @@ class ByColumn implements SortingInterface
      *
      * @return array values that were actually used to define sorting
      */
-    public function bindValues($values)
+    public function bindValues(array $values): array
     {
         $appliedValues = [];
         $this->sortColumn = null;
@@ -67,11 +79,11 @@ class ByColumn implements SortingInterface
     }
 
     /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $builder
+     * @param QueryBuilder $builder
      *
-     * @return \Doctrine\DBAL\Query\QueryBuilder
+     * @return QueryBuilder
      */
-    public function apply(QueryBuilder $builder)
+    public function apply(QueryBuilder $builder): QueryBuilder
     {
         if ($this->sortColumn) {
             $builder->addOrderBy($this->sortColumn, $this->sortDirection);

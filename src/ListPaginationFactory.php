@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination;
 
@@ -17,10 +18,10 @@ class ListPaginationFactory
      * @param string     $listBuilderFullClassName
      * @param array      $listParameters
      *
-     * @return \Ifedko\DoctrineDbalPagination\ListPagination
+     * @return ListPagination
      * @throws \Exception
      */
-    public static function create(Connection $dbConnection, $listBuilderFullClassName, $listParameters = [])
+    public static function create(Connection $dbConnection, $listBuilderFullClassName, $listParameters = []): ListPagination
     {
         if (!class_exists($listBuilderFullClassName)) {
             throw new ListPaginationFactoryException(sprintf('Unknown list builder class %s', $listBuilderFullClassName));

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
@@ -33,7 +34,7 @@ class GreaterThanOrEqualFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function bindValues($values)
+    public function bindValues($values): FilterInterface
     {
         $this->value = $values;
 
@@ -41,11 +42,11 @@ class GreaterThanOrEqualFilter implements FilterInterface
     }
 
     /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $builder
+     * @param QueryBuilder $builder
      *
-     * @return \Doctrine\DBAL\Query\QueryBuilder
+     * @return QueryBuilder
      */
-    public function apply(QueryBuilder $builder)
+    public function apply(QueryBuilder $builder): QueryBuilder
     {
         $builder->andWhere($builder->expr()->gte($this->column, $builder->expr()->literal($this->value)));
 

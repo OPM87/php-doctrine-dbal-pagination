@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Filter\Base;
 
@@ -45,7 +46,7 @@ class MultipleLikeFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function bindValues($values)
+    public function bindValues($values): FilterInterface
     {
         $values = explode(' ', $values);
         $values = array_filter($values);
@@ -64,7 +65,7 @@ class MultipleLikeFilter implements FilterInterface
     /**
      * {@inheritDoc}
      */
-    public function apply(QueryBuilder $builder)
+    public function apply(QueryBuilder $builder): QueryBuilder
     {
         $andConditions = [];
         foreach ($this->includeValues as $value) {

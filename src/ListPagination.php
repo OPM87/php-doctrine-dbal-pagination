@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination;
 
@@ -12,18 +13,14 @@ class ListPagination
     const DEFAULT_LIMIT = 20;
     const DEFAULT_OFFSET = 0;
 
-    /**
-     * @var \Ifedko\DoctrineDbalPagination\ListBuilder
-     */
+    /**  @var ListBuilder */
     private $listQueryBuilder;
 
-    /**
-     * @var callable|null
-     */
+    /** @var callable|null */
     private $pageItemsMapCallback;
 
     /**
-     * @param \Ifedko\DoctrineDbalPagination\ListBuilder $listQueryBuilder
+     * @param ListBuilder $listQueryBuilder
      */
     public function __construct(ListBuilder $listQueryBuilder)
     {
@@ -31,15 +28,15 @@ class ListPagination
     }
 
     /**
-     * @param int $limit
-     * @param int $offset
+     * @param int $limit  must be >0 , otherwise DEFAULT_LIMIT will be taken
+     * @param int $offset must be >=0 , otherwise DEFAULT_OFFSET will be taken
      *
      * @return array
      */
-    public function get($limit, $offset)
+    public function get(int $limit = self::DEFAULT_LIMIT, int $offset = self::DEFAULT_OFFSET): array
     {
-        $limit = (intval($limit) > 0) ? intval($limit) : self::DEFAULT_LIMIT;
-        $offset = (intval($offset) >= 0) ? $offset : self::DEFAULT_OFFSET;
+        $limit = $limit > 0 ? $limit : self::DEFAULT_LIMIT;
+        $offset = $offset >= 0 ? $offset : self::DEFAULT_OFFSET;
 
         $pageItems = $this->listQueryBuilder->query()
             ->setMaxResults($limit)->setFirstResult($offset)->execute()->fetchAll();
@@ -58,7 +55,7 @@ class ListPagination
     /**
      * @param callback $callback
      */
-    public function definePageItemsMapCallback($callback)
+    public function definePageItemsMapCallback(callable $callback)
     {
         $this->pageItemsMapCallback = $callback;
     }

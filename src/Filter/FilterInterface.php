@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination\Filter;
 
@@ -14,14 +15,14 @@ interface FilterInterface
     /**
      * @param mixed $values
      *
-     * @return void
+     * @return FilterInterface
      */
-    public function bindValues($values);
+    public function bindValues($values): FilterInterface;
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $builder
      *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
-    public function apply(QueryBuilder $builder);
+    public function apply(QueryBuilder $builder): QueryBuilder;
 }

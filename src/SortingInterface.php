@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ifedko\DoctrineDbalPagination;
 
@@ -16,12 +17,12 @@ interface SortingInterface
      *
      * @return array values that were actually used to define sorting
      */
-    public function bindValues($values);
+    public function bindValues(array $values): array;
 
     /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $builder
+     * @param QueryBuilder $builder
      *
-     * @return \Doctrine\DBAL\Query\QueryBuilder
+     * @return QueryBuilder
      */
-    public function apply(QueryBuilder $builder);
+    public function apply(QueryBuilder $builder): QueryBuilder;
 }
